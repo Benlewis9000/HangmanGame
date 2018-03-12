@@ -41,35 +41,32 @@ public class Game {
         isRunning = running;
     }
 
+    public int getFalseGuesses() {
+        return falseGuesses;
+    }
+
+    public void setFalseGuesses(int falseGuesses) {
+        this.falseGuesses = falseGuesses;
+    }
+
     /* Methods */
 
-    public Game (String word){
-        this.startGame(word);
+    public Game (String answer){
+        this.startGame(answer);
     }
 
     public void startGame(String answer){
 
-        /*
-        HashMap<Integer, Character> answerMap = new HashMap<>();
         char[] answerArray = answer.toCharArray();
-        for (int i =  0; i < answer.length(); i++){
-            answerMap.put(i, answerArray[i]);
-        }
 
-        HashMap<Integer, Character> guessMap = new HashMap<>();
-        for (int i = 0; i < answer.length(); i++){
-            guessMap
-        }
-        ^^^ Hashmaps redundant, since key values for characters is literally a char[]
-        */
-
-        char[] answerArray = answer.toCharArray();
+        // used for a .contains() if statement;
         ArrayList<Character> answerArrayList = new ArrayList<>();
         for (char c : answerArray){
             answerArrayList.add(c);
         }
 
 
+        // Stores correct guesses, where void is '_'
         char[] correctArray = new char[answer.length()];
         for (int i = 0; i < correctArray.length; i++){
             correctArray[i] = '_';
@@ -85,8 +82,9 @@ public class Game {
 
             String input = sc.nextLine();
 
+            if (input.length() != 1 /*|| sc.nextLine().equalsIgnoreCase("")*/){
 
-            if (input.length() > 1 || !sc.hasNextLine()){
+                // DEBUG: System.out.println("if statement 1 (invalid entry)");
 
                 switch (input){
                     case "exit":
@@ -104,23 +102,35 @@ public class Game {
             }
             else {
 
+                // DEBUG: System.out.println("if statement 2");
+
                 char guess = input.charAt(0);
 
                 if (!answerArrayList.contains(guess)){
-                    // false answer
+
+                    // false guess
                     System.out.println("WRONG");
-                    this.setCorrect(this.getCorrect() + 1);
+
+                    this.setFalseGuesses(this.getFalseGuesses() + 1);
                 }
+                else {
 
-                for (int i = 0; i < answer.length(); i++){
+                    // correct guess TODO: Will need to check for double entries of corrects
+                    for (int i = 0; i < answer.length(); i++){
 
-                    if(guess == answer.charAt(i)){
+                        // check if users guess is correct at each index of answer char array
+                        if(guess == answer.charAt(i)){
 
-                        correctArray[i] = guess;
+                            correctArray[i] = guess;
+
+                        }
 
                     }
 
+                    System.out.println("CORRECT");
                 }
+
+                // DEBUG: System.out.println(correctArray);
 
                 printProgress(correctArray);
 
