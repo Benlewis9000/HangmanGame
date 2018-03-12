@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import static github.benlewis9000.HangmanGame.Utilities.printProgress;
+
 public class Game {
 
     /* Instance variables */
 
     private String word;
-    private int guesses;
+    private int correct;
     private int falseGuesses;
     private boolean isRunning = false;
 
@@ -23,12 +25,12 @@ public class Game {
         this.word = word;
     }
 
-    public int getGuesses() {
-        return guesses;
+    public int getCorrect() {
+        return correct;
     }
 
-    public void setGuesses(int guesses) {
-        this.guesses = guesses;
+    public void setCorrect(int guesses) {
+        this.correct = correct;
     }
 
     public boolean isRunning() {
@@ -68,9 +70,9 @@ public class Game {
         }
 
 
-        char[] guessesArray = new char[answer.length()];
-        for (char c : guessesArray){
-            c = '_';
+        char[] correctArray = new char[answer.length()];
+        for (int i = 0; i < correctArray.length; i++){
+            correctArray[i] = '_';
         }
 
         // Begin Game
@@ -83,7 +85,8 @@ public class Game {
 
             String input = sc.nextLine();
 
-            if (input.length() > 1){
+
+            if (input.length() > 1 || !sc.hasNextLine()){
 
                 switch (input){
                     case "exit":
@@ -106,19 +109,20 @@ public class Game {
                 if (!answerArrayList.contains(guess)){
                     // false answer
                     System.out.println("WRONG");
-                    this.setGuesses(this.getGuesses() + 1);
+                    this.setCorrect(this.getCorrect() + 1);
                 }
 
                 for (int i = 0; i < answer.length(); i++){
 
                     if(guess == answer.charAt(i)){
 
-                        guessesArray[i] = guess;
+                        correctArray[i] = guess;
 
                     }
 
                 }
-                System.out.println(guessesArray);
+
+                printProgress(correctArray);
 
             }
 
