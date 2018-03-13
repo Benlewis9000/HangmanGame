@@ -1,5 +1,8 @@
 package github.benlewis9000.HangmanGame;
 
+import java.lang.reflect.Array;
+import java.util.HashSet;
+
 public class Utilities {
 
     public static void printProgress(char[] charArray){
@@ -33,6 +36,22 @@ public class Utilities {
 
         System.out.println(progress);
 
+    }
+
+    public static void printHelp() {
+        System.out.println("Available commands:");
+        System.out.println(" - \"help\": prints list of commands. ");
+        System.out.println(" - \"exit\": exits the game. ");
+    }
+
+    public static HashSet<Character> toCharHashSet(char[] charArray){
+        HashSet<Character> charHashSet = new HashSet<>();
+
+        for (char c : charArray){
+            charHashSet.add(c);
+        }
+
+        return charHashSet;
     }
 
 }
