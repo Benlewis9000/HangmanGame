@@ -15,7 +15,8 @@ public class WordGenerator {
 
      */
 
-    ArrayList<String> words = new ArrayList<>(Arrays.asList("gravel",
+    ArrayList<String> words = new ArrayList<>(Arrays.asList(
+            "gravel",
             "premium",
             "favour",
             "oven",

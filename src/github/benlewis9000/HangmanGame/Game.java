@@ -12,7 +12,7 @@ public class Game {
 
     private String answer;
     private HashSet<Character> charGuesses = new HashSet<>();
-    private HashSet<Character> correctGuesses = new HashSet<>();
+    private int correctGuesses = 0;
     private int totalGuesses = 0;
     private int falseGuesses = 0;
     private boolean isRunning = false;
@@ -35,11 +35,11 @@ public class Game {
         this.charGuesses = charGuesses;
     }
 
-    public HashSet<Character> getCorrectGuesses() {
+    public int getCorrectGuesses() {
         return correctGuesses;
     }
 
-    public void setCorrectGuesses(HashSet<Character> correctGuesses) {
+    public void setCorrectGuesses(int correctGuesses) {
         this.correctGuesses = correctGuesses;
     }
 
@@ -78,7 +78,7 @@ public class Game {
     public void startGame(String answer){
 
         System.out.println("A new game has begun..." +
-                        "\nMake your first guess!");
+                        "\nMake your first guess! (Letter + ENTER)");
 
         char[] answerArray = answer.toCharArray();
 
@@ -95,6 +95,8 @@ public class Game {
             correctArray[i] = '_';
         }
 
+        printProgress(correctArray);
+
         // Begin Game
 
         this.setRunning(true);
@@ -106,8 +108,6 @@ public class Game {
             String input = sc.nextLine();
 
             if (input.length() != 1){
-
-                // DEBUG: System.out.println("if statement 1 (invalid entry)");
 
                 switch (input){
                     case "exit":
@@ -124,8 +124,6 @@ public class Game {
 
             }
             else {
-
-                // DEBUG: System.out.println("if statement 2");
 
                 char guess = input.charAt(0);
 
@@ -155,10 +153,7 @@ public class Game {
 
                     // Increment total guesses
                     this.setTotalGuesses(this.getTotalGuesses() + 1);
-
-                    // Add the guess to the charGuesses HashSet (ignored naturally if already in there)
-                    this.getCharGuesses().add(guess);
-
+                    this.setCorrectGuesses(this.getCorrectGuesses() + 1);
 
                     for (int i = 0; i < answer.length(); i++) {
 
@@ -179,7 +174,8 @@ public class Game {
                     }
                 }
 
-                // DEBUG: System.out.println(correctArray);
+                // Add the guess to the charGuesses HashSet (ignored naturally if already in there)
+                this.getCharGuesses().add(guess);
 
                 printProgress(correctArray);
 
@@ -188,6 +184,8 @@ public class Game {
         }
 
     }
+
+
 
     public void gameWin(){
         this.setRunning(false);
@@ -199,9 +197,13 @@ public class Game {
     public void gameLoss(){
         this.setRunning(false);
         System.out.println(
-                "You lost! Better luck next time." +
+                "\nYou lost! Better luck next time." +
+                "\nGuesses made: " + this.getTotalGuesses() +
+                "\nWord progress: " + correctGuesses + "/" + toCharHashSet(answer.toCharArray()).size() +
                 "\nCorrect answer: " + this.getAnswer());
     }
+
+
 
 }
 

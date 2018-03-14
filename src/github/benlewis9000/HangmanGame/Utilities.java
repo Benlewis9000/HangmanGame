@@ -2,6 +2,7 @@ package github.benlewis9000.HangmanGame;
 
 import java.lang.reflect.Array;
 import java.util.HashSet;
+import java.util.Scanner;
 
 public class Utilities {
 
@@ -39,9 +40,12 @@ public class Utilities {
     }
 
     public static void printHelp() {
-        System.out.println("Available commands:");
-        System.out.println(" - \"help\": prints list of commands. ");
-        System.out.println(" - \"exit\": exits the game. ");
+        System.out.println(
+                "Available commands:" +
+                "\n - \"help\": prints list of commands. " +
+                "\n - \"exit\": exits the game." +
+                "\nTo submit a guess, type the letter and press ENTER." +
+                "\nGuesses must be 1 character only, and are case sensitive.\n");
     }
 
     public static HashSet<Character> toCharHashSet(char[] charArray){
@@ -54,4 +58,22 @@ public class Utilities {
         return charHashSet;
     }
 
+    public static boolean askQuestion(String question) {
+
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+
+            System.out.println("\n" + question + "(\"y\"/\"n\")");
+
+            switch (sc.nextLine()) {
+                case "y":
+                    return true;
+                case "n":
+                    return false;
+                default:
+                    break;
+            }
+        }
+    }
 }
