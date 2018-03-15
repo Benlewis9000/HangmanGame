@@ -1,5 +1,6 @@
 package github.benlewis9000.HangmanGame;
 
+import java.io.IOException;
 import java.util.*;
 
 import static github.benlewis9000.HangmanGame.Utilities.printHelp;
@@ -12,6 +13,7 @@ public class Game {
 
     private String answer;
     private HashSet<Character> charGuesses = new HashSet<>();
+    private HashSet<Character> charCorrectGuesses = new HashSet<>();
     private int correctGuesses = 0;
     private int totalGuesses = 0;
     private int falseGuesses = 0;
@@ -33,6 +35,14 @@ public class Game {
 
     public void setCharGuesses(HashSet<Character> charGuesses) {
         this.charGuesses = charGuesses;
+    }
+
+    public HashSet<Character> getCharCorrectGuesses() {
+        return charCorrectGuesses;
+    }
+
+    public void setCharCorrectGuesses(HashSet<Character> charCorrectGuesses) {
+        this.charCorrectGuesses = charCorrectGuesses;
     }
 
     public int getCorrectGuesses() {
@@ -155,6 +165,11 @@ public class Game {
                     this.setTotalGuesses(this.getTotalGuesses() + 1);
                     this.setCorrectGuesses(this.getCorrectGuesses() + 1);
 
+                    this.getCharCorrectGuesses().add(guess);
+                    //HashSet<Character> cCGUpdated = this.getCharCorrectGuesses();
+                    //cCGUpdated.add(guess);
+                    //this.setCharCorrectGuesses(cCGUpdated);
+
                     for (int i = 0; i < answer.length(); i++) {
 
                         // check if users guess is correct at each index of answer char array
@@ -168,10 +183,11 @@ public class Game {
                     System.out.println("CORRECT");
 
                     // Check current
-                    if (this.getCharGuesses().equals(toCharHashSet(this.getAnswer().toCharArray()))) {
+                    if (this.getCharCorrectGuesses().equals(toCharHashSet(this.getAnswer().toCharArray()))) {
                         this.gameWin();
                         break;
                     }
+                    //System.out.println("DEBUG: " + this.getCharGuesses() + "\nDEBUG: " + this.getCharCorrectGuesses() + "\nDEBUG: " + toCharHashSet((this.getAnswer().toCharArray())));
                 }
 
                 // Add the guess to the charGuesses HashSet (ignored naturally if already in there)
