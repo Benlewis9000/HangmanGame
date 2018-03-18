@@ -111,11 +111,16 @@ public class Game {
 
         this.setRunning(true);
 
+        // Create graphic character
+
+        HangmanCharacter hangmanCharacter = new HangmanCharacter(CharacterStage.STAGE_0);
+
         Scanner sc = new Scanner(System.in);
 
         while (this.isRunning){
 
             String input = sc.nextLine();
+            Utilities.clrscr();
 
             if (input.length() != 1){
 
@@ -146,20 +151,26 @@ public class Game {
                     this.setTotalGuesses(this.getTotalGuesses() + 1);
 
                     // false guess
+                    //Utilities.clearConsole();
+                    hangmanCharacter.stageUp();
+                    hangmanCharacter.draw();
+
                     System.out.println("WRONG");
 
                     this.setFalseGuesses(this.getFalseGuesses() + 1);
 
-                    if (this.getFalseGuesses() == 10){
+                    if (this.getFalseGuesses() == 9){
                         this.gameLoss();
                         break;
                     }
                     else {
-                        System.out.println("You have " + (10 - this.getFalseGuesses()) + " guess remaining.");
+                        System.out.println("You have " + (9 - this.getFalseGuesses()) + " guess remaining.");
                     }
 
                 }
                 else {
+
+                    hangmanCharacter.draw();
 
                     // Increment total guesses
                     this.setTotalGuesses(this.getTotalGuesses() + 1);

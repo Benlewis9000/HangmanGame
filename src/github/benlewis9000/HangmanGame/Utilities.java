@@ -1,5 +1,6 @@
 package github.benlewis9000.HangmanGame;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -76,4 +77,23 @@ public class Utilities {
             }
         }
     }
+
+    /*
+    public static void clearConsole (){
+        for (int i = 0; i < 80; i++){
+            System.out.println("");
+        }
+    }
+    */
+
+    public static void clrscr(){
+        //Clears Screen in java
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException ex) {}
+    }
+
 }
